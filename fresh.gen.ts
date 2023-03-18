@@ -244,29 +244,70 @@ const manifest: DecoManifest = {
                   "title": "Action",
                   "type": "object",
                   "properties": {
+                    "callToActionActive": {
+                      "type": [
+                        "boolean",
+                        "null",
+                      ],
+                      "title": "Call To Action Active",
+                    },
                     "href": {
                       "type": "string",
                       "title": "Href",
                     },
                     "title": {
-                      "type": "string",
+                      "type": [
+                        "string",
+                        "null",
+                      ],
                       "title": "Title",
                     },
                     "subTitle": {
-                      "type": "string",
+                      "type": [
+                        "string",
+                        "null",
+                      ],
                       "title": "Sub Title",
                     },
                     "label": {
-                      "type": "string",
+                      "type": [
+                        "string",
+                        "null",
+                      ],
                       "title": "Label",
                     },
                   },
                   "required": [
                     "href",
-                    "title",
-                    "subTitle",
-                    "label",
                   ],
+                },
+                "simpleLabel": {
+                  "title": "Simple Label",
+                  "type": "object",
+                  "properties": {
+                    "simpleLabelActive": {
+                      "type": [
+                        "boolean",
+                        "null",
+                      ],
+                      "title": "Simple Label Active",
+                    },
+                    "title": {
+                      "type": [
+                        "string",
+                        "null",
+                      ],
+                      "title": "Title",
+                    },
+                    "subtitle": {
+                      "type": [
+                        "string",
+                        "null",
+                      ],
+                      "title": "Subtitle",
+                    },
+                  },
+                  "required": [],
                 },
               },
               "required": [
@@ -293,6 +334,24 @@ const manifest: DecoManifest = {
             ],
             "title": "Autoplay interval",
             "description": "time (in seconds) to start the carousel autoplay",
+          },
+          "arrowControls": {
+            "type": [
+              "boolean",
+              "null",
+            ],
+            "title": "Enable Arrow Controls",
+            "description":
+              "check this control if you want customers can change the sliders more than fast to left or right",
+          },
+          "dotControls": {
+            "type": [
+              "boolean",
+              "null",
+            ],
+            "title": "Enable Dot Controls",
+            "description":
+              "check this control if you want customer can see the bottom dots",
           },
         },
         "required": [],
