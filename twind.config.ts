@@ -42,6 +42,8 @@ const options: Omit<Options, "selfURL"> = {
         "interactive-inverse": "#FFFFFF",
         "hover": "rgba(0, 0, 0, 0.04)",
         "hover-inverse": "rgba(255, 255, 255, 0.4)",
+        "primary": "#808080",
+        "primary-ligth": "#A7A7A7",
       },
       textColor: {
         "default": "#161616",
@@ -52,6 +54,8 @@ const options: Omit<Options, "selfURL"> = {
         "section-title": "#161616",
         "positive": "#1A7346",
         "critical": "#B44125",
+        "primary": "#808080",
+        "primary-ligth": "#A7A7A7",
       },
       borderColor: {
         "default": "#D4DBD7",
@@ -73,6 +77,11 @@ const options: Omit<Options, "selfURL"> = {
         "body": ["16px", "20px"],
         "caption": ["13px", "16px"],
         "list-price": ["10px", "20px"],
+        "breadcrumb": ["11px", "19px"],
+        "product-1": ["22px", "18px"],
+        "product-2": ["18px", "19px"],
+        "product-3": ["16px", "19px"],
+        "product-4": ["12px", "16px"],
       },
       fontWeight: {
         "heading-1": "500",
@@ -83,6 +92,7 @@ const options: Omit<Options, "selfURL"> = {
         "body": "400",
         "caption": "400",
         "list-price": "400",
+        "breadcrumb": "400",
       },
       animation: {
         "slide-left": "slide-left-frame 0.4s ease normal",
@@ -111,8 +121,14 @@ const options: Omit<Options, "selfURL"> = {
       },
     },
     fontFamily: {
-      sans: ["Albert Sans", "sans-serif"],
+      sans: ["Roboto", "sans-serif"],
       serif: ["inherit", "serif"],
+    },
+    letterSpacing: {
+      normal: "0.36px",
+      wide: "2.5px",
+      wider: "2.75px",
+      widest: "4.5px",
     },
     screens: {
       sm: "640px",
