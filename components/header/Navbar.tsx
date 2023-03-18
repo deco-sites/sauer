@@ -4,6 +4,7 @@ import Button from "$store/components/ui/Button.tsx";
 
 import NavItem from "./NavItem.tsx";
 import { navbarHeight } from "./constants.ts";
+import { navbarHeightDesktop } from "./constants.ts"
 import type { INavItem } from "./NavItem.tsx";
 import type { Props as SearchbarProps } from "$store/components/search/Searchbar.tsx";
 import HeaderSearchMenu from "$store/islands/HeaderSearchMenu.tsx";
@@ -35,16 +36,16 @@ function Navbar({ items, searchbar }: {
       </div>
 
       {/* Desktop Version */}
-      <div class="hidden md:flex flex-row justify-between items-center border-b-1 border-default w-full pl-2 pr-3">
+      <div class={`hidden md:flex flex-row flex-wrap justify-start items-center w-full mt-[20px] mb-[30px] pl-2 pr-[52px] pl-[98px] h-[${navbarHeightDesktop}]`}>
         <div class="flex-none w-44">
           <a href="/" aria-label="Store logo" class="block px-4 py-3 w-[160px]">
             <Icon id="Logo" width={126} height={16} />
           </a>
         </div>
-        <div class="flex-auto flex justify-center">
+        <div class="grid gap-4 grid-flow-col justify-start">
           {items.map((item) => <NavItem item={item} />)}
         </div>
-        <div class="flex-none w-44 flex items-center justify-end gap-2">
+        <div class="flex-none flex items-center justify-end gap-2 order-[-1] w-full">
           <HeaderButton variant="search" />
           <HeaderSearchMenu searchbar={searchbar} />
           <Button
