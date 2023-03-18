@@ -1,5 +1,4 @@
 import Modals from "$store/islands/HeaderModals.tsx";
-import type { Image } from "deco-sites/std/components/types.ts";
 import type { EditableProps as SearchbarProps } from "$store/components/search/Searchbar.tsx";
 import type { LoaderReturnType } from "$live/types.ts";
 import type { Product, Suggestion } from "deco-sites/std/commerce/types.ts";
@@ -20,10 +19,6 @@ export interface NavItem {
       href: string;
     }>;
   }>;
-  image?: {
-    src?: Image;
-    alt?: string;
-  };
 }
 
 export interface Props {

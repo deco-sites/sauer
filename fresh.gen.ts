@@ -449,6 +449,10 @@ const manifest: DecoManifest = {
                       "type": "string",
                       "const": "WhatsApp",
                     },
+                    {
+                      "type": "string",
+                      "const": "Cart",
+                    },
                   ],
                   "title": "Icon",
                   "description": "Image src",
@@ -652,6 +656,10 @@ const manifest: DecoManifest = {
                                 "type": "string",
                                 "const": "WhatsApp",
                               },
+                              {
+                                "type": "string",
+                                "const": "Cart",
+                              },
                             ],
                             "title": "Icon",
                           },
@@ -788,25 +796,6 @@ const manifest: DecoManifest = {
                       "href",
                     ],
                   },
-                },
-                "image": {
-                  "title": "Image",
-                  "type": "object",
-                  "properties": {
-                    "src": {
-                      "format": "image-uri",
-                      "type": "string",
-                      "title": "Src",
-                    },
-                    "alt": {
-                      "type": [
-                        "string",
-                        "null",
-                      ],
-                      "title": "Alt",
-                    },
-                  },
-                  "required": [],
                 },
               },
               "required": [

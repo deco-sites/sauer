@@ -8,6 +8,7 @@ import { navbarHeightDesktop } from "./constants.ts"
 import type { INavItem } from "./NavItem.tsx";
 import type { Props as SearchbarProps } from "$store/components/search/Searchbar.tsx";
 import HeaderSearchMenu from "$store/islands/HeaderSearchMenu.tsx";
+import Menu from "./Menu.tsx";
 
 function Navbar({ items, searchbar }: {
   items: INavItem[];
@@ -17,10 +18,8 @@ function Navbar({ items, searchbar }: {
     <>
       {/* Mobile Version */}
       <div
-        class={`md:hidden flex flex-row justify-between items-center h-[${navbarHeight}] border-b-1 border-default w-full px-2 gap-2`}
+        class={`md:hidden flex flex-row justify-between flex-wrap items-center w-full px-2 gap-2`}
       >
-        <HeaderButton variant="menu" />
-
         <a
           href="/"
           class={`flex-grow inline-flex items-center min-h-[${navbarHeight}]`}
@@ -29,10 +28,38 @@ function Navbar({ items, searchbar }: {
           <Icon id="Logo" width={126} height={16} />
         </a>
 
-        <div class="flex gap-1">
+        <div class="flex-none flex items-center justify-end gap-2">
           <HeaderButton variant="search" />
-          <HeaderButton variant="cart" />
+          <HeaderSearchMenu searchbar={searchbar} />
+          <Button
+            as="a"
+            variant="icon"
+            href="/account"
+            aria-label="Log in"
+          >
+            <Icon id="User" width={20} height={20} strokeWidth={0.4} />
+          </Button>
+          <Button
+            variant="icon"
+            href="/favoritos"
+            aria-label="Favoritos"
+          >
+            <Icon id="Heart" width={20} height={20} strokeWidth={2} />
+          </Button>
+
+          <Button 
+            variant="icon"
+            href="/checkout"
+            aria-label="Cart"
+          >
+            <Icon id="Cart" width={20} height={20} strokeWidth={2} />
+          </Button>
         </div>
+
+        {/* <div class="grid gap-4 grid-flow-col justify-between w-full">
+          {items.map((item) => <Menu items={items} />)}
+        </div> */}
+        <Menu items={items} />
       </div>
 
       {/* Desktop Version */}
