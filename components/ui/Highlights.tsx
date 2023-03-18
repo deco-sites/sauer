@@ -27,12 +27,14 @@ function Highlights({ highlights = [], title }: Props) {
         class="gap-3"
         snap=""
       >
-        {highlights.map(({ href, src, alt, labelTop,labelBottom }) => (
+        {highlights.map(({ href, src, alt, labelTop, labelBottom }) => (
           <a
             href={href}
             class=" relative flex flex-col gap-4 items-center min-w-[190px]"
           >
-            <span class="absolute top-0 left-0 p-2 text-heading-2 text-default-inverse">{labelTop}</span>
+            <span class="absolute top-0 left-0 p-2 text-heading-2 text-default-inverse">
+              {labelTop}
+            </span>
             <Image
               class="rounded-[0px]"
               src={src}
@@ -40,7 +42,9 @@ function Highlights({ highlights = [], title }: Props) {
               width={613}
               height={423}
             />
-            <span class="absolute bottom-0 left-0 p-2 text-heading-3 text-default-inverse">{labelBottom}</span>
+            <span class="absolute bottom-0 left-0 p-2 text-heading-3 text-default-inverse">
+              {labelBottom}
+            </span>
           </a>
         ))}
       </Gallery>
