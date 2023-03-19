@@ -1,7 +1,8 @@
-import Text from "$store/components/ui/Text.tsx";
-import Avatar from "$store/components/ui/Avatar.tsx";
 import { useVariantPossibilities } from "$store/sdk/useVariantPossiblities.ts";
 import type { Product } from "deco-sites/std/commerce/types.ts";
+import { useSignal } from "@preact/signals";
+
+const POSSIBILITY = "Tamanho";
 
 interface Props {
   product: Product;
@@ -9,30 +10,28 @@ interface Props {
 
 function VariantSelector({ product }: Props) {
   const possibilities = useVariantPossibilities(product);
-  const { url: currentUrl } = product;
 
   return (
-    <ul class="flex flex-col gap-4">
-      {Object.keys(possibilities).map((name) => (
-        <li class="flex flex-col gap-2">
-          <Text variant="caption">{name}</Text>
-          <ul class="flex flex-row gap-2">
-            {Object.entries(possibilities[name]).map(([url, value]) => (
-              <li>
-                <a href={url}>
-                  <Avatar
-                    // deno-lint-ignore no-explicit-any
-                    content={value as any}
-                    disabled={url === currentUrl}
-                    variant={name === "COR" ? "color" : "abbreviation"}
-                  />
-                </a>
-              </li>
-            ))}
-          </ul>
-        </li>
-      ))}
-    </ul>
+    <div class="flex flex-col gap-3 lg:gap-10">
+      <div class="hidden lg:block">
+        <p class="text-product-3 text-primary leading-3 tracking-widest uppercase lg:text-product-2">
+          {POSSIBILITY}
+        </p>
+      </div>
+
+      <select class="border-b-1 border-primary text-primary cursor-pointer outline-none p-3 text-product-4 w-[196px] lg:text-button">
+        <option value={""}>
+          Selecione um tamanho
+        </option>
+        {Object.entries(possibilities[POSSIBILITY]).slice(1).map((
+          [url, value],
+        ) => (
+          <option value={url}>
+            {value}
+          </option>
+        ))}
+      </select>
+    </div>
   );
 }
 

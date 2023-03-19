@@ -1,16 +1,32 @@
 import Image from "deco-sites/std/components/Image.tsx";
 import AddToCartButton from "$store/islands/AddToCartButton.tsx";
+import ProductSelector from "$store/components/product/ProductVariantSelector.tsx";
 import Container from "$store/components/ui/Container.tsx";
 import Text from "$store/components/ui/Text.tsx";
 import Breadcrumb from "$store/components/ui/Breadcrumb.tsx";
 import Button from "$store/components/ui/Button.tsx";
-import Icon from "$store/components/ui/Icon.tsx";
 import { useOffer } from "$store/sdk/useOffer.ts";
 import { formatPrice } from "$store/sdk/format.ts";
 import type { LoaderReturnType } from "$live/types.ts";
 import type { ProductDetailsPage } from "deco-sites/std/commerce/types.ts";
 
-import ProductSelector from "./ProductVariantSelector.tsx";
+const SPECIFICATIONS = [
+  {
+    name: "Mais Informações",
+    value:
+      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+  },
+  {
+    name: "Tamanhos e Medidas",
+    value:
+      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+  },
+  {
+    name: "Cuidados com a Joia",
+    value:
+      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+  },
+];
 
 export interface Props {
   page: LoaderReturnType<ProductDetailsPage | null>;
@@ -35,98 +51,107 @@ function Details({ page }: { page: ProductDetailsPage }) {
     product,
   } = page;
   const {
+    sku,
     description,
-    productID,
     offers,
     image: images,
-    name,
-    gtin,
   } = product;
   const { price, listPrice, seller, installments } = useOffer(offers);
   const [front, back] = images ?? [];
 
+  const productName = product.isVariantOf?.hasVariant[0].name;
+  const skuName = product.name;
+
   return (
-    <Container class="py-0 sm:py-10">
-      <div class="flex flex-col gap-4 sm:flex-row sm:gap-10">
-        {/* Image Gallery */}
-        <div class="flex flex-row overflow-auto snap-x snap-mandatory scroll-smooth sm:gap-2">
-          {[front, back ?? front].map((img, index) => (
-            <Image
-              style={{ aspectRatio: "360 / 500" }}
-              class="snap-center min-w-[100vw] sm:min-w-0 sm:w-auto sm:h-[600px]"
-              sizes="(max-width: 640px) 100vw, 30vw"
-              src={img.url!}
-              alt={img.alternateName}
-              width={360}
-              height={500}
-              // Preload LCP image for better web vitals
-              preload={index === 0}
-              loading={index === 0 ? "eager" : "lazy"}
-            />
-          ))}
-        </div>
-        {/* Product Info */}
-        <div class="flex-auto px-4 sm:px-0">
-          {/* Breadcrumb */}
+    <Container class="py-0 lg:py-16">
+      <div class="flex flex-col">
+        {/* Breadcrumb - Desktop */}
+        <div class="hidden lg:block px-6 py-7 lg:px-0">
           <Breadcrumb
             itemListElement={breadcrumbList?.itemListElement.slice(0, -1)}
           />
-          {/* Code and name */}
-          <div class="mt-4 sm:mt-8">
-            <div>
-              <Text tone="subdued" variant="caption">
-                Cod. {gtin}
-              </Text>
-            </div>
-            <h1>
-              <Text variant="heading-3">{name}</Text>
-            </h1>
-          </div>
-          {/* Prices */}
-          <div class="mt-4">
-            <div class="flex flex-row gap-2 items-center">
-              <Text
-                class="line-through"
-                tone="subdued"
-                variant="list-price"
-              >
-                {formatPrice(listPrice, offers!.priceCurrency!)}
-              </Text>
-              <Text tone="price" variant="heading-3">
-                {formatPrice(price, offers!.priceCurrency!)}
-              </Text>
-            </div>
-            <Text tone="subdued" variant="caption">
-              {installments}
-            </Text>
-          </div>
-          {/* Sku Selector */}
-          <div class="mt-4 sm:mt-6">
-            <ProductSelector product={product} />
-          </div>
-          {/* Add to Cart and Favorites button */}
-          <div class="mt-4 sm:mt-10 flex flex-col gap-2">
-            {seller && (
-              <AddToCartButton
-                skuId={productID}
-                sellerId={seller}
+        </div>
+        <div class="flex flex-col lg:flex-row lg:gap-10">
+          {/* Image Gallery */}
+          <div class="flex flex-row overflow-auto snap-x snap-mandatory scroll-smooth lg:max-w-[792px] lg:w-[792px] lg:mr-28">
+            {[front, back ?? front].map((img, index) => (
+              <Image
+                style={{ aspectRatio: "375 / 375" }}
+                class="min-w-[100vw] lg:h-[fit-content] lg:min-w-[-webkit-fill-available]"
+                sizes="(max-width: 640px) 100vw, 30vw"
+                src={img.url!}
+                alt={img.alternateName}
+                width={375}
+                height={375}
+                // Preload LCP image for better web vitals
+                preload={index === 0}
+                loading={index === 0 ? "eager" : "lazy"}
               />
-            )}
-            <Button variant="secondary">
-              <Icon id="Heart" width={20} height={20} strokeWidth={2} />{" "}
-              Favoritar
-            </Button>
+            ))}
           </div>
-          {/* Description card */}
-          <div class="mt-4 sm:mt-6">
-            <Text variant="caption">
-              {description && (
-                <details>
-                  <summary class="cursor-pointer">Descrição</summary>
-                  <div class="ml-2 mt-2">{description}</div>
-                </details>
+          {/* Product Info */}
+          <div class="flex-auto px-6 lg:px-0 lg:w-1/2">
+            {/* Breadcrumb - Mobile */}
+            <div class="lg:hidden py-7 lg:px-0">
+              <Breadcrumb
+                itemListElement={breadcrumbList?.itemListElement.slice(0, -1)}
+              />
+            </div>
+            {/* Code and name */}
+            <div class="mt-2">
+              <h1 class="text-product-4 text-primary font-medium leading-3 tracking-normal lg:text-product-1">
+                {skuName === productName
+                  ? productName
+                  : `${productName} - ${skuName}`}
+              </h1>
+            </div>
+            {/* Prices */}
+            <div class="flex flex-col gap-1 mt-3 lg:gap-0.5">
+              <p class="text-product-4 text-primary-ligth leading-3 tracking-normal lg:text-product-3">
+                {formatPrice(listPrice, offers!.priceCurrency!)}
+              </p>
+              <p class="text-product-4 text-primary-ligth leading-3 tracking-normal lg:text-product-3">
+                {installments}
+              </p>
+              <p class="text-product-4 text-primary-ligth leading-3 tracking-normal lg:text-product-3">
+                <span class="mr-1">Preço à vista:</span>
+                <span class="font-bold">
+                  {formatPrice(price, offers!.priceCurrency!)}
+                </span>
+              </p>
+            </div>
+            {/* Description */}
+            <div class="mt-4 lg:mt-12">
+              <p class="text-product-4 text-primary leading-3 tracking-normal lg:text-product-2">
+                {description}
+              </p>
+            </div>
+            {/* Sku Selector */}
+            <div class="mt-4 lg:mt-12">
+              <ProductSelector product={product} />
+            </div>
+            {/* Buy */}
+            <div class="mt-4 mb-10 lg:mt-12">
+              {seller && (
+                <AddToCartButton
+                  skuId={sku}
+                  sellerId={seller}
+                />
               )}
-            </Text>
+            </div>
+            {/* Specifications */}
+            <div class="mt-4 lg:mt-12">
+              {SPECIFICATIONS.map((specification) => (
+                <details class="my-10 max-w-max">
+                  <summary class="text-product-3 text-primary leading-3 tracking-widest uppercase list-none lg:text-product-2">
+                    {specification.name}
+                  </summary>
+                  <p class="text-product-4 text-primary tracking-normal leading-6 pt-4 lg:text-product-2 lg:leading-9 lg:pt-8">
+                    {specification.value}
+                  </p>
+                </details>
+              ))}
+            </div>
           </div>
         </div>
       </div>
