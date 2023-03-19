@@ -1,14 +1,14 @@
 import Image from "deco-sites/std/components/Image.tsx";
-import Container from "$store/components/ui/Container.tsx";
 import Text from "$store/components/ui/Text.tsx";
-import Slider from "$store/components/ui/Slider.tsx";
 import type { Image as LiveImage } from "deco-sites/std/components/types.ts";
+import Gallery from "./Gallery.tsx";
 
 export interface Highlight {
   src: LiveImage;
   alt: string;
   href: string;
-  label: string;
+  labelTop?: string;
+  labelBottom?: string;
 }
 
 export interface Props {
@@ -18,32 +18,37 @@ export interface Props {
 
 function Highlights({ highlights = [], title }: Props) {
   return (
-    <Container class="grid grid-cols-1 grid-rows-[48px_1fr] py-10">
-      <h2 class="text-center">
+    <div class="flex flex-col py-10">
+      <h2 class=" relative text-center py-10">
         <Text variant="heading-2">{title}</Text>
       </h2>
 
-      <Slider
-        class="gap-6"
-        snap="snap-center sm:snap-start block first:ml-6 sm:first:ml-0 last:mr-6 sm:last:mr-0"
+      <Gallery
+        class="gap-3"
+        snap=""
       >
-        {highlights.map(({ href, src, alt, label }) => (
+        {highlights.map(({ href, src, alt, labelTop, labelBottom }) => (
           <a
             href={href}
-            class="flex flex-col gap-4 items-center min-w-[190px]"
+            class=" relative flex flex-col gap-4 items-center min-w-[190px]"
           >
+            <span class="absolute top-0 left-0 p-2 text-heading-2 text-default-inverse">
+              {labelTop}
+            </span>
             <Image
-              class="rounded-[40px]"
+              class="rounded-[0px]"
               src={src}
               alt={alt}
-              width={190}
-              height={265}
+              width={613}
+              height={423}
             />
-            <Text variant="body">{label}</Text>
+            <span class="absolute bottom-0 left-0 p-2 text-heading-3 text-default-inverse">
+              {labelBottom}
+            </span>
           </a>
         ))}
-      </Slider>
-    </Container>
+      </Gallery>
+    </div>
   );
 }
 
