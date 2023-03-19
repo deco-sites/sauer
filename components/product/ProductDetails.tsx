@@ -1,6 +1,6 @@
 import Image from "deco-sites/std/components/Image.tsx";
 import AddToCartButton from "$store/islands/AddToCartButton.tsx";
-import ProductSelector from "$store/islands/ProductVariantSelector.tsx";
+import ProductSelector from "$store/components/product/ProductVariantSelector.tsx";
 import Container from "$store/components/ui/Container.tsx";
 import Text from "$store/components/ui/Text.tsx";
 import Breadcrumb from "$store/components/ui/Breadcrumb.tsx";
@@ -9,6 +9,24 @@ import { useOffer } from "$store/sdk/useOffer.ts";
 import { formatPrice } from "$store/sdk/format.ts";
 import type { LoaderReturnType } from "$live/types.ts";
 import type { ProductDetailsPage } from "deco-sites/std/commerce/types.ts";
+
+const SPECIFICATIONS = [
+  {
+    name: "Mais Informações",
+    value:
+      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+  },
+  {
+    name: "Tamanhos e Medidas",
+    value:
+      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+  },
+  {
+    name: "Cuidados com a Joia",
+    value:
+      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+  },
+];
 
 export interface Props {
   page: LoaderReturnType<ProductDetailsPage | null>;
@@ -59,7 +77,7 @@ function Details({ page }: { page: ProductDetailsPage }) {
             {[front, back ?? front].map((img, index) => (
               <Image
                 style={{ aspectRatio: "375 / 375" }}
-                class="min-w-[100vw] lg:min-w-[-webkit-fill-available]"
+                class="min-w-[100vw] lg:h-[fit-content] lg:min-w-[-webkit-fill-available]"
                 sizes="(max-width: 640px) 100vw, 30vw"
                 src={img.url!}
                 alt={img.alternateName}
@@ -120,6 +138,19 @@ function Details({ page }: { page: ProductDetailsPage }) {
                   sellerId={seller}
                 />
               )}
+            </div>
+            {/* Specifications */}
+            <div class="mt-4 lg:mt-12">
+              {SPECIFICATIONS.map((specification) => (
+                <details class="my-10 max-w-max">
+                  <summary class="text-product-3 text-primary leading-3 tracking-widest uppercase list-none lg:text-product-2">
+                    {specification.name}
+                  </summary>
+                  <p class="text-product-4 text-primary tracking-normal leading-6 pt-4 lg:text-product-2 lg:leading-9 lg:pt-8">
+                    {specification.value}
+                  </p>
+                </details>
+              ))}
             </div>
           </div>
         </div>
