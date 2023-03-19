@@ -16,14 +16,21 @@ export interface Banner {
   /** @description Image's alt text */
   alt: string;
   action?: {
+    callToActionActive?: boolean;
     /** @description when user clicks on the image, go to this link */
     href: string;
     /** @description Image text title */
-    title: string;
+    title?: string;
     /** @description Image text subtitle */
-    subTitle: string;
+    subTitle?: string;
     /** @description Button label */
-    label: string;
+    label?: string;
+  };
+
+  simpleLabel?: {
+    simpleLabelActive?: boolean;
+    title?: string;
+    subtitle?: string;
   };
 }
 
@@ -38,6 +45,18 @@ export interface Props {
    * @description time (in seconds) to start the carousel autoplay
    */
   interval?: number;
+
+  /**
+   * @title Enable Arrow Controls
+   * @description check this control if you want customers can change the sliders more than fast to left or right
+   */
+  arrowControls?: boolean;
+
+  /**
+   * @title Enable Dot Controls
+   * @description check this control if you want customer can see the bottom dots
+   */
+  dotControls?: boolean;
 }
 
 function BannerItem({ image, lcp }: { image: Banner; lcp?: boolean }) {
@@ -46,6 +65,7 @@ function BannerItem({ image, lcp }: { image: Banner; lcp?: boolean }) {
     mobile,
     desktop,
     action,
+    simpleLabel,
   } = image;
 
   return (
@@ -73,7 +93,7 @@ function BannerItem({ image, lcp }: { image: Banner; lcp?: boolean }) {
             alt={alt}
           />
         </Picture>
-        {action && (
+        {action?.callToActionActive && (
           <div
             class="absolute top-0 bottom-0 m-auto left-0 right-0 sm:right-auto sm:left-[12%] max-h-min max-w-[235px] flex flex-col gap-4 bg-hover-inverse p-4 rounded"
             style={{ backdropFilter: "blur(8px)" }}
@@ -85,6 +105,16 @@ function BannerItem({ image, lcp }: { image: Banner; lcp?: boolean }) {
               {action.subTitle}
             </Text>
             <Button variant="secondary">{action.label}</Button>
+          </div>
+        )}
+        {simpleLabel?.simpleLabelActive && (
+          <div class="absolute bottom-[5%] m-auto left-0 right-0 sm:right-auto sm:left-[5%] max-h-min max-w-[235px] flex flex-col gap-4 bg-hover hover:bg-hover-inverse p-4 rounded">
+            <Text variant="heading-2" tone="default">
+              {simpleLabel?.title}
+            </Text>
+            <Text variant="heading-2" tone="default">
+              {simpleLabel?.subtitle}
+            </Text>
           </div>
         )}
       </a>
@@ -178,7 +208,9 @@ function Controls() {
   );
 }
 
-function BannerCarousel({ images, preload, interval }: Props) {
+function BannerCarousel(
+  { images, preload, interval, arrowControls, dotControls }: Props,
+) {
   const id = useId();
 
   return (
@@ -191,10 +223,9 @@ function BannerCarousel({ images, preload, interval }: Props) {
           <BannerItem image={image} lcp={index === 0 && preload} />
         ))}
       </Slider>
-
-      <Controls />
-
-      <Dots images={images} interval={interval} />
+      {arrowControls &&
+        <Controls />}
+      {dotControls && <Dots images={images} interval={interval} />}
 
       <SliderControllerJS rootId={id} interval={interval && interval * 1e3} />
     </div>
